@@ -12,16 +12,26 @@ const player1El = document.querySelector(".player--1");
 const diceEl = document.querySelector(".dice");
 const btnNew = document.querySelector(".btn--New");
 const btnRoll = document.querySelector(".btn--roll");
-const btnHold = document.querySelector(".btn--Hold");
+const btnHold = document.querySelector(".btn--hold");
 
 //starting condition
 score0El.textContent = 0;
 score1El.textContent = 0;
 diceEl.classList.add("hidden");
 
-let score = [0, 0];
+let scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
+
+let switchPlayer = function () {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  currentScore = 0;
+
+  player0El.classList.toggle("player--active");
+  player1El.classList.toggle("player--active");
+};
+
 //Rolling dice funtionality
 btnRoll.addEventListener("click", function () {
   //1. Generating a rendom number
@@ -40,12 +50,15 @@ btnRoll.addEventListener("click", function () {
       currentScore;
   } else {
     //Switch to next player
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    currentScore = 0;
-
-    player0El.classList.toggle("player--active");
-    player1El.classList.toggle("player--active");
+    switchPlayer();
   }
 });
-// if true,switch to next player
+
+btnHold.addEventListener("click", function () {
+  // 1. Add current score to active player's score
+  scores[activePlayer] += currentScore;
+  // scores[1] = scores[1] + currentScore
+  document.getElementById(`score--${activePlayer}`).textContent =
+    scores[activePlayer];
+  // 2. Check if player's score is >= 100
+});
