@@ -95,3 +95,6 @@ btnHold.addEventListener("click", function () {
     }
   }
 });
+
+//rest setting
+btnNew.addEventListener("click", init);
